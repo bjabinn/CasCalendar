@@ -1,0 +1,53 @@
+<html>
+    <head>        
+        <link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700&display=swap" rel="stylesheet" nonce="">
+        <link href="https://fonts.googleapis.com/css?family=Bitter%3Ai%2Cbi%2C700%2C400%2C500%7CMontserrat%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet" nonce="">
+        <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+        <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
+        <link rel="stylesheet" href="./myTheme.css" />
+        <title>TORNEOS AJEDREZ</title>
+    </head>
+    <body>   
+        <div id="cabecera">
+            <div id="outerLogo">
+                <img id="logo" src="./logoRedondoSinLetras.jpg">
+            </div>
+            <div id="letreros">
+                <spam id="letrero1">Casa del Ajedrez de Sevilla</spam>
+                <spam id="letrero2">Información próximos torneos adaptada a padres y jugadores noveles</spam>
+        </div>
+        </div>     
+        <div id="calendario"></div>     
+        
+        <script>
+            var Calendar = window.tui.Calendar;
+
+            var cal = new Calendar('#calendario', {
+                usageStatistics: false, 
+                useDetailPopup: true,
+                month: {
+                    startDayOfWeek: 1, 
+                    dayNames: ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
+                    visibleWeeksCount: 5,
+                },
+                defaultView: 'month',                
+            });
+
+            cal.createEvents([
+            {                
+                title: 'VI Torneo Piscinero <br>(Utrera)',
+                body: '<p><b>Sistema juego</b>: 8 Rondas. 8+3</p>' + 
+                       '<p><b>Precios</b>: Federados: 10€ federados. Sub18: 7€. No federados +2€.</p>' + 
+                       '<p><b>Bases</b>: aqui https://www.fadajedrez.com/index.php/delegaciones/sevillana/torneos-en-sevilla/1729-vi-torneo-piscinero-de-ajedrez-ciudad-de-utrera/2023-06-24-09-00<p>'+
+                        '<p><b>Notas</b>: Muy divertido para niños entre 4 en adelante.</p>',
+                start: '2023-06-24T09:00:00',
+                end: '2023-06-24T15:00:00',
+                location: 'Calle Residencial Parque de Consolación s/n',
+                isReadOnly: true,
+                isVisible: true,                
+            },
+            ])
+        </script>
+    </body>
+</html>
