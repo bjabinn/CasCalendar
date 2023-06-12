@@ -1,0 +1,95 @@
+<html>
+    <head>        
+        <link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700&display=swap" rel="stylesheet" nonce="">
+        <link href="https://fonts.googleapis.com/css?family=Bitter%3Ai%2Cbi%2C700%2C400%2C500%7CMontserrat%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet" nonce="">        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+        <link rel="stylesheet" href="./myThemeInsert.css" />
+        <title>TORNEOS AJEDREZ</title>
+    </head>
+    <body>   
+        <div id="cabecera">
+            <div id="outerLogo">
+                <img id="logo" src="./logoRedondoSinLetras.jpg">
+            </div>
+            <div id="letreros">
+                <spam id="letrero1">Casa del Ajedrez de Sevilla</spam>
+                <spam id="letrero2">Información próximos torneos adaptada a padres y jugadores noveles</spam>
+            </div>
+        </div>     
+        <div class="form-group" id="formulario">
+            <div class="form-group"><label for="nombreTorneo">Nombre: </label> <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo"></div>
+            <div class="form-group"><label for="sistemaDeJuego">Sistema de Juego: </label> <input type="text" class="form-control" id="sistemaDeJuego" name="sistemaDeJuego placeholder="Sistema de Juego"></div>
+            <div class="form-group"><label for="precio">Precio: </label> <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio"></div>
+            <div class="form-group"><label for="urlBases">Bases (url): </label> <input type="text" class="form-control" id="urlBases" name="urlBases" placeholder="url bases"></div>          
+            <div class="form-group">
+                <label for="comienzo">Comienzo: </label> 
+                <!-- <input type="text" class="form-control" id="comienzo" name="comienzo" placeholder="Comienzo"> -->
+                <input type="text" id="comienzo" class="datetimepicker" />
+            </div>
+            
+            <div class="form-group"><label for="fin">Fin: </label>
+                <!-- <input type="text" class="form-control" id="fin" name="fin" placeholder="Fin"> -->
+                <input type="text" id="fin" class="datetimepicker" />
+            </div>
+
+            <div class="form-group"><label for="lugar">Lugar: </label> <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego"></div>            
+            <div class="form-group"><label for="notas">Notas</label> <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas"></div>
+            <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>
+        </div>     
+                
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <script type="text/javascript">
+            $(".datetimepicker").each(function () {
+              $(this).datetimepicker();
+            });
+          </script>
+
+        <script>
+            $(document).ready(function() {
+                $("#aceptar").click(function() {   
+                    var nombreTorneo = $("#nombreTorneo").val();
+                    var sistemaDeJuego = $("#sistemaDeJuego").val();
+                    var precio = $("#precio").val();
+                    var urlBases = $("#urlBases").val();
+                    var comienzo = $("#comienzo").val();
+                    var fin = $("#fin").val();
+                    var location = $("#lugar").val();
+                    var notas = $("#notas").val();
+
+                    var objeto = {                        
+                        "nombreTorneo": nombreTorneo,
+                        "sistemaDeJuego": sistemaDeJuego,
+                        "precio": precio,
+                        "basesURL": urlBases,                        
+                        "comienzo": comienzo,
+                        "fin": fin,
+                        "location": location,
+                        "notas": notas,
+                        "visible": true
+                    };
+
+                    var json = JSON.stringify(objeto);
+
+                    $.ajax({
+                        url: "http://localhost:8080/calendar",
+                        type: "POST",
+                        data: json, 
+                        contentType: "application/json",                        
+                        success: function(response) {                        
+                            console.log("DONE: " + response);
+                        },
+                        error: function(xhr, status, error) {                            
+                            console.log(error);
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </body>
+</html>

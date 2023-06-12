@@ -1,0 +1,42 @@
+body {
+    font-family: "Bitter";
+}
+
+#cabecera {
+    margin: 20px 15px 20 15px;
+    display: flex;
+}
+
+#outerLogo {
+    width: 8%;
+}
+
+#logo {
+    width: 100%;
+}
+
+#letreros {
+    display: inline-grid;
+}
+
+#letrero1 {
+    width: 92%;
+    padding: 5px 10px 0 10px;
+    font-family: "Montserrat";    
+    font-size: 25pt;
+}
+
+#letrero2 {
+    padding: 0 10px 0 10px;
+}
+
+#formulario {
+    padding: 0 15px;
+
+} 
+
+#formulario label {
+        margin-bottom: 0;
+    }
+
+
