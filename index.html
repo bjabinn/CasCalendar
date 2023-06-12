@@ -50,16 +50,18 @@
                                                '{' + 
                                                     '"title": "' + evento.nombreTorneo + '", ' + 
                                                     '"body": "<p><b>Sistema juego</b>:' + evento.sistemaDeJuego + '</p>' + 
-                                                    '<p><b>Precio</b>:' + evento.precio + '</p>' + 
-                                                    //'<p><b>Bases</b>:<a target="_blank" href="' + evento.basesURL + '">aqui></a></p>' + 
-                                                    '<p><b>Notas</b>:' + evento.notas + '</p>", ' + 
-                                                    '"start":' + "\"" + comienzoConverted + "\", " + 
-                                                    '"end":' + "\"" + finConverted + "\", " + 
-                                                    '"location":' + "\"" + evento.location + "\", " + 
+                                                        '<p><b>Precio</b>:' + evento.precio + '</p>' + 
+                                                        "<p><b>Bases</b>:<a target='_blank' href='" + evento.basesURL + "'>aqui</a></p>" + 
+                                                        "<p><b>Notas</b>:" + evento.notas + "</p>\"," + 
+                                                    '"start": "' + comienzoConverted + "\", " + 
+                                                    '"end": "' + finConverted + "\", " + 
+                                                    '"location":' + "\"" + evento.location + "\"," + 
+                                                    '"isReadOnly":true, ' + 
                                                     '"isVisible":' + evento.visible + 
                                               '}';
                     }
                     eventToCalendar += ']';
+                    console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
                     cal.createEvents(eventToCalendarJson);
                 });
