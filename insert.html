@@ -41,7 +41,28 @@
             <div class="form-group"><label for="lugar">Lugar: </label> <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego"></div>            
             <div class="form-group"><label for="notas">Notas</label> <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas"></div>
             <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>
-            <table id="eventos" class="table"></table>            
+
+            <table id="eventos" class="table"></table>
+            
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Notificación</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" id="modal-content">
+                      Evento guardado satisfactoriamente
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
         </div>     
                 
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -113,6 +134,7 @@
                         contentType: "application/json",                        
                         success: function(response) {                        
                             console.log("DONE: " + response);
+                            $('#myModal').modal('toggle');
                         },
                         error: function(xhr, status, error) {                            
                             console.log(error);

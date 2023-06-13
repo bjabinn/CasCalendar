@@ -2,8 +2,7 @@
     <head>        
         <link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700&display=swap" rel="stylesheet" nonce="">
         <link href="https://fonts.googleapis.com/css?family=Bitter%3Ai%2Cbi%2C700%2C400%2C500%7CMontserrat%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet" nonce="">
-        <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+        <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />        
         <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
         <link rel="stylesheet" href="./myTheme.css" />
         <title>TORNEOS AJEDREZ</title>
@@ -19,7 +18,7 @@
         </div>
         </div>     
         <div id="calendario"></div>
-        <div id="releaseDate">20230613-1553</div>
+        <div id="releaseDate">20230613-1812</div>
         
         <script>
             var Calendar = window.tui.Calendar;
@@ -44,8 +43,8 @@
                     for (var i=0; i < response.length; i++){
                         var evento = response[i];
 
-                        var comienzoConverted = evento.comienzo.replace("/", "-").replace(" ", "T") + ":00";
-                        var finConverted = evento.fin.replace("/", "-").replace(" ", "T") + ":00";
+                        var comienzoConverted = evento.comienzo.replace(/\//g, "-").replace(" ", "T") + ":00";
+                        var finConverted = evento.fin.replace(/\//g, "-").replace(" ", "T") + ":00";
 
                         eventToCalendar =  eventToCalendar + 
                                                '{' + 
