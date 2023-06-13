@@ -100,8 +100,9 @@
 
                     var json = JSON.stringify(objeto);
 
+                    //http://localhost:8080
                     $.ajax({
-                        url: "http://localhost:8080/calendar",
+                        url: "https://cas-calendar-api.herokuapp.com/calendar",
                         type: "POST",
                         data: json, 
                         contentType: "application/json",                        

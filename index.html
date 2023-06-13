@@ -18,7 +18,8 @@
                 <spam id="letrero2">Información próximos torneos adaptada a padres y jugadores noveles</spam>
         </div>
         </div>     
-        <div id="calendario"></div>     
+        <div id="calendario"></div>
+        <div id="releaseDate">20230613-1337</div>
         
         <script>
             var Calendar = window.tui.Calendar;
@@ -34,8 +35,8 @@
 
                 defaultView: 'month',                
             });
-
-            fetch('http://localhost:8080/calendar', {
+            //http://localhost:8080
+            fetch('https://cas-calendar-api.herokuapp.com/calendar', {
                     headers: {"Content-Type": "application/json; charset=utf-8"}
             }).then(function (response) {
                 response.json().then(function (response) {
