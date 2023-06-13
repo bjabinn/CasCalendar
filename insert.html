@@ -21,25 +21,54 @@
         </div>     
         <div class="form-group" id="formulario">
             <div class="form-group"><label for="nombreTorneo">Nombre: </label> <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo"></div>
-            <div class="form-group"><label for="sistemaDeJuego">Sistema de Juego: </label> <input type="text" class="form-control" id="sistemaDeJuego" name="sistemaDeJuego placeholder="N rondas. 10+3"></div>
-            <div class="form-group"><label for="precio">Precio: </label> <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio"></div>
+            
+            
             <div class="form-group"><label for="urlBases">Bases (url): </label> <input type="text" class="form-control" id="urlBases" name="urlBases" placeholder="url bases"></div>          
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3"><label for="sistemaDeJuego">Sistema de Juego: </label> <input type="text" class="form-control" id="sistemaDeJuego" name="sistemaDeJuego placeholder="N rondas. 10+3"></div>
+
+                <div class="form-group col-md-3"><label for="precio">Precio: </label> <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio"></div>
+
+                <div class="form-group col-md-3">
                     <label for="comienzo">Comienzo: </label> 
                     <!-- <input type="text" class="form-control" id="comienzo" name="comienzo" placeholder="Comienzo"> -->
                     <input type="text" id="comienzo" class="datetimepicker form-control" />
                 </div>
                 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
                     <label for="fin">Fin: </label>
                     <!-- <input type="text" class="form-control" id="fin" name="fin" placeholder="Fin"> -->
                     <input type="text" id="fin" class="datetimepicker form-control" />
                 </div>
             </div>
 
-            <div class="form-group"><label for="lugar">Lugar: </label> <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego"></div>            
+            <div class="form-group"><label for="lugar">Lugar: </label> <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego"></div>                        
+
+            <div class="form-row" style="text-align: center; border: 1px solid #ced4da; border-radius: 5px; height: calc(1.5em + .75rem + 2px); padding: .375rem 1rem;">
+                <div class="col-md-3">
+                    <input class="form-check-input" type="checkbox" id="chksub8" value="sub8">
+                    <label class="form-check-label" for="chksub8">Sub8</label>
+                </div>
+
+                <div class="col-md-3">
+                <input class="form-check-input" type="checkbox" id="chksub10" value="sub10">
+                <label class="form-check-label" for="chksub8">Sub10</label>
+                </div>
+
+                <div class="col-md-3">
+                <input class="form-check-input" type="checkbox" id="chksub12" value="sub12">
+                <label class="form-check-label" for="chksub8">Sub12</label>
+                </div>
+
+                <div class="col-md-3">
+                <input class="form-check-input" type="checkbox" id="chksub14" value="sub14">
+                <label class="form-check-label" for="chksub8">Sub14</label>                    
+                </div>                
+            </div>
+
             <div class="form-group"><label for="notas">Notas</label> <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas"></div>
+
+
             <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>
 
             <table id="eventos" class="table"></table>
