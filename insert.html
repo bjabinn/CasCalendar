@@ -81,18 +81,23 @@
                     var sistemaDeJuego = $("#sistemaDeJuego").val();
                     var precio = $("#precio").val();
                     var urlBases = $("#urlBases").val();
-                    var comienzo = $("#comienzo").val().replace("/", "-");
-                    var fin = $("#fin").val().replace("/", "-");
+                    var comienzo = $("#comienzo").val();
+                    var fin = $("#fin").val();
                     var location = $("#lugar").val();
                     var notas = $("#notas").val();
+
+                    var comienzoConverted = comienzo.replace("/", "-");
+                    var finConverted = fin.replace("/", "-");
+
+                    console.log (comienzoConverted + " - " + finConverted);
 
                     var objeto = {                        
                         "nombreTorneo": nombreTorneo,
                         "sistemaDeJuego": sistemaDeJuego,
                         "precio": precio,
                         "basesURL": urlBases,                        
-                        "comienzo": comienzo,
-                        "fin": fin,
+                        "comienzo": comienzoConverted,
+                        "fin": finConverted,
                         "location": location,
                         "notas": notas,
                         "visible": true
