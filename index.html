@@ -61,7 +61,7 @@
                                                     '"isVisible":' + evento.visible + 
                                               '}, ';
                     }
-                    eventToCalendar += ']';
+                    eventToCalendar = eventToCalendar.substring(0, eventToCalendar.length-2) + ']';
                     console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
                     cal.createEvents(eventToCalendarJson);
