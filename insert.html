@@ -86,8 +86,8 @@
                     var location = $("#lugar").val();
                     var notas = $("#notas").val();
 
-                    var comienzoConverted = comienzo.replace("/", "-");
-                    var finConverted = fin.replace("/", "-");
+                    var comienzoConverted = comienzo.replace(/\//g, "-");
+                    var finConverted = fin.replace(/\//g, "-");
 
                     console.log (comienzoConverted + " - " + finConverted);
 
