@@ -44,8 +44,8 @@
                     for (var i=0; i < response.length; i++){
                         var evento = response[i];
 
-                        var comienzoConverted = evento.comienzo.replace(" ", "T") + ":00";
-                        var finConverted = evento.fin.replace(" ", "T") + ":00";
+                        var comienzoConverted = evento.comienzo.replace("/", "-").replace(" ", "T") + ":00";
+                        var finConverted = evento.fin.replace("/", "-").replace(" ", "T") + ":00";
 
                         eventToCalendar =  eventToCalendar + 
                                                '{' + 
