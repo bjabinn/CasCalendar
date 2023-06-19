@@ -2,6 +2,7 @@
     <head>        
         <link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700&display=swap" rel="stylesheet" nonce="">
         <link href="https://fonts.googleapis.com/css?family=Bitter%3Ai%2Cbi%2C700%2C400%2C500%7CMontserrat%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet" nonce="">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />        
         <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
         <link rel="stylesheet" href="./myTheme.css" />
@@ -28,16 +29,21 @@
                         <i class="calendar-icon ic-arrow-line-right"></i>
                     </button>
                 </span>
-                <span class="calendar-render-range">2023.06</span>
+                <span class="calendar-render-range" id="rangoFecha"></span>
             </div>
         </div>        
         <div id="calendario"></div>
         <div id="releaseDate">20230619-1007</div>
         
-        <script>            
+        <script>
+            $(document).ready(function() {  
+                actualizaPeriodoCalendario();
+            });
+
             var Calendar = window.tui.Calendar;
 
             var cal = new Calendar('#calendario', {
+                calendars: [], 
                 usageStatistics: false, 
                 useDetailPopup: true,
                 month: {
@@ -48,6 +54,7 @@
 
                 defaultView: 'month',                
             });
+
             //http://localhost:8080
             fetch('https://cas-calendar-api.herokuapp.com/calendar', {
                     headers: {"Content-Type": "application/json; charset=utf-8"}
@@ -81,31 +88,35 @@
                 });
             });
 
-            // cal.createEvents([
-            // {                
-            //     title: 'VI Torneo Piscinero (Utrera)',
-            //     body: '<p><b>Sistema juego</b>: 8 Rondas. 8+3</p>' + 
-            //            '<p><b>Precios</b>:Federados: 10€<br>Sub18: 7€.<br>No federados +2€.</p>' + 
-            //            '<p><b>Bases</b>:<a target="_blank" href="https://www.fadajedrez.com/index.php/delegaciones/sevillana/torneos-en-sevilla/1729-vi-torneo-piscinero-de-ajedrez-ciudad-de-utrera/2023-06-24-09-00">aqui</a><p>'+
-            //             '<p><b>Notas</b>: Muy divertido para niños a partir de 5 años.</p>',
-            //     start: '2023-06-24T09:00:00',
-            //     end: '2023-06-24T15:00:00',
-            //     location: 'Calle Residencial Parque de Consolación s/n',
-            //     isReadOnly: true,
-            //     isVisible: true,                
-            // },
-            // ])
-
             function today() {
                 cal.today();
+                actualizaPeriodoCalendario();
             }
 
             function nextMonth() {
                 cal.next();
+                actualizaPeriodoCalendario();
             }
 
             function previousMonth(){
                 cal.prev();
+                actualizaPeriodoCalendario();
+            }
+
+            function actualizaPeriodoCalendario(){
+                var diaActual = cal.getDateRangeStart().getDate();
+                diaActual = diaActual < 10 ? '0' + diaActual : diaActual;
+                var mesActual = cal.getDateRangeStart().getMonth() + 1;
+                mesActual = mesActual < 10 ? '0' + mesActual : mesActual; 
+                var diaMesAñoStart = diaActual + "-" + mesActual + "-" + cal.getDateRangeStart().getFullYear() + " al ";
+
+                var diaFinal = cal.getDateRangeEnd().getDate();
+                diaFinal = diaFinal < 10 ? '0' + diaFinal : diaFinal;
+                var mesFinal = cal.getDateRangeEnd().getMonth() + 1;
+                mesFinal = mesFinal < 10 ? '0' + mesFinal : mesFinal; 
+                var diaMesAñoFinal = diaMesAñoStart + diaFinal + "-" + mesFinal + "-" + cal.getDateRangeEnd().getFullYear();
+                
+                $("#rangoFecha").text(diaMesAñoFinal);
             }
 
         </script>
