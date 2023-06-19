@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />        
         <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
         <link rel="stylesheet" href="./myTheme.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <title>TORNEOS AJEDREZ</title>
     </head>
     <body>   
@@ -40,7 +41,7 @@
                 actualizaPeriodoCalendario();
             });
 
-            var Calendar = window.tui.Calendar;
+            var Calendar = window.tui.Calendar;            
 
             var cal = new Calendar('#calendario', {
                 calendars: [], 
@@ -51,7 +52,37 @@
                     dayNames: ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
                     visibleWeeksCount: 5,
                 },
+                template: {                    
+                    popupStateFree: function (data) {
+                        return null;
+                    },
+                    popupStateBusy: function (data) {
+                        return null;
+                    },
+                    titlePlaceholder: function (data) {
+                        return 'Enter title';
+                    },
+                    locationPlaceholder: function (data) {
+                        return 'Enter location';
+                    },
+                    startDatePlaceholder: function (data) {
+                        return '';
+                    },
+                    endDatePlaceholder: function (data) {
+                        return '';
+                    },
+                    popupDetailTitle: function (data) {
+                        data.state = null;
+                        var contenido = document.querySelector("#calendario > div.toastui-calendar-floating-layer > div.toastui-calendar-event-detail-popup-slot > div > div.toastui-calendar-detail-container > div.toastui-calendar-popup-section.toastui-calendar-section-header > div.toastui-calendar-content > span");
+                        if ( contenido != null) {
+                            var antiguoValor = contenido.textContent;
+                            var hora24h = moment(antiguoValor, "YYYY.MM.DD hh:mm A").format("DD.MM.YYYY HH:mm");
+                            contenido.textContent=hora24h;
+                        }                            
+                        return data.title;
+                    },
 
+                },
                 defaultView: 'month',                
             });
 
