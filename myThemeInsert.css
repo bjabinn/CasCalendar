@@ -37,6 +37,20 @@ body {
 
 #formulario label {
         margin-bottom: 0;
-    }
+}
+
+.oculto {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.validationField {
+    color: red; 
+    font-size: 14px;
+    margin-left: 14px;
+}
 
 

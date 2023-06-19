@@ -15,12 +15,26 @@
             <div id="letreros">
                 <spam id="letrero1">Casa del Ajedrez de Sevilla</spam>
                 <spam id="letrero2">Información próximos torneos adaptada a padres y jugadores noveles</spam>
+            </div>
         </div>
-        </div>     
+        <div>
+            <div id="calendarMenu">
+                <span id="menu-navi">
+                    <button type="button" class="calendar-btn calendar-move-today" onclick="today();">Today</button>
+                    <button type="button" class="calendar-btn calendar-move-day" onclick="previousMonth();">
+                        <i class="calendar-icon ic-arrow-line-left"></i>
+                    </button>
+                    <button type="button" class="calendar-btn calendar-move-day" onclick="nextMonth();">
+                        <i class="calendar-icon ic-arrow-line-right"></i>
+                    </button>
+                </span>
+                <span class="calendar-render-range">2023.06</span>
+            </div>
+        </div>        
         <div id="calendario"></div>
-        <div id="releaseDate">20230613-1812</div>
+        <div id="releaseDate">20230619-1007</div>
         
-        <script>
+        <script>            
             var Calendar = window.tui.Calendar;
 
             var cal = new Calendar('#calendario', {
@@ -61,7 +75,7 @@
                                               '}, ';
                     }
                     eventToCalendar = eventToCalendar.substring(0, eventToCalendar.length-2) + ']';
-                    console.log(eventToCalendar);
+                    //console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
                     cal.createEvents(eventToCalendarJson);
                 });
@@ -81,6 +95,19 @@
             //     isVisible: true,                
             // },
             // ])
+
+            function today() {
+                cal.today();
+            }
+
+            function nextMonth() {
+                cal.next();
+            }
+
+            function previousMonth(){
+                cal.prev();
+            }
+
         </script>
     </body>
 </html>

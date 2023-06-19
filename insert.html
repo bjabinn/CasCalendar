@@ -20,50 +20,81 @@
             </div>
         </div>     
         <div class="form-group" id="formulario">
-            <div class="form-group"><label for="nombreTorneo">Nombre: </label> <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo"></div>
+            <div class="form-group">
+                <label for="nombreTorneo">Nombre:</label>
+                <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo">
+                <div id="validationNombreTorneo" class="oculto validationField">El nombre del torneo no puede estar vacio</div>
+            </div>
             
             
-            <div class="form-group"><label for="urlBases">Bases (url): </label> <input type="text" class="form-control" id="urlBases" name="urlBases" placeholder="url bases"></div>          
-            <div class="form-row">
-                <div class="form-group col-md-3"><label for="sistemaDeJuego">Sistema de Juego: </label> <input type="text" class="form-control" id="sistemaDeJuego" name="sistemaDeJuego placeholder="N rondas. 10+3"></div>
+            <div class="form-group">
+                <label for="urlBases">Bases (url): </label>
+                <input type="text" class="form-control" id="urlBases" name="urlBases" placeholder="url bases">
+            </div>
 
-                <div class="form-group col-md-3"><label for="precio">Precio: </label> <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio"></div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="sistemaDeJuego">Sistema de Juego:</label>
+                    <input type="text" class="form-control" id="sistemaDeJuego" name="sistemaDeJuego placeholder="N rondas. 10+3">                    
+                </div>
 
                 <div class="form-group col-md-3">
-                    <label for="comienzo">Comienzo: </label> 
-                    <!-- <input type="text" class="form-control" id="comienzo" name="comienzo" placeholder="Comienzo"> -->
-                    <input type="text" id="comienzo" class="datetimepicker form-control" />
+                    <label for="precio">Precio: </label>
+                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="comienzo">Comienzo: </label>                     
+                    <input type="text" id="comienzo" class="datetimepicker form-control" />                    
                 </div>
                 
                 <div class="form-group col-md-3">
                     <label for="fin">Fin: </label>
-                    <!-- <input type="text" class="form-control" id="fin" name="fin" placeholder="Fin"> -->
-                    <input type="text" id="fin" class="datetimepicker form-control" />
+                    <input type="text" id="fin" class="datetimepicker form-control" />                    
                 </div>
             </div>
 
-            <div class="form-group"><label for="lugar">Lugar: </label> <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego"></div>                        
+            <div class="form-group">
+                <label for="lugar">Lugar: </label>
+                <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego">                
+            </div>
 
             <div class="form-row" style="text-align: center; border: 1px solid #ced4da; border-radius: 5px; height: calc(1.5em + .75rem + 2px); padding: .375rem 1rem;">
-                <div class="col-md-3">
+                <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub8" value="sub8">
                     <label class="form-check-label" for="chksub8">Sub8</label>
                 </div>
 
-                <div class="col-md-3">
-                <input class="form-check-input" type="checkbox" id="chksub10" value="sub10">
-                <label class="form-check-label" for="chksub8">Sub10</label>
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chksub10" value="sub10">
+                    <label class="form-check-label" for="chksub8">Sub10</label>
                 </div>
 
-                <div class="col-md-3">
-                <input class="form-check-input" type="checkbox" id="chksub12" value="sub12">
-                <label class="form-check-label" for="chksub8">Sub12</label>
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chksub12" value="sub12">
+                    <label class="form-check-label" for="chksub8">Sub12</label>
                 </div>
 
-                <div class="col-md-3">
-                <input class="form-check-input" type="checkbox" id="chksub14" value="sub14">
-                <label class="form-check-label" for="chksub8">Sub14</label>                    
-                </div>                
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chksub14" value="sub14">
+                    <label class="form-check-label" for="chksub8">Sub14</label>
+                </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chksub16" value="sub16">
+                    <label class="form-check-label" for="chksub6">Sub16</label>
+                </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chkVeterano" value="subVeterano">
+                    <label class="form-check-label" for="chksub8">Veterano</label>
+                </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chkFemenino" value="subFemenino">
+                    <label class="form-check-label" for="chksub8">Femenino</label>
+                </div>
             </div>
 
             <div class="form-group"><label for="notas">Notas</label> <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas"></div>
@@ -98,34 +129,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
-            $(".datetimepicker").each(function () {
-               $(this).datetimepicker();            
-            });
-          </script>
-
-        <script type="text/javascript">
-            function refrescaTabla(){
-                $.ajax({
-                    url: "http://localhost:8080/calendar",
-                    type: "GET",
-                    data: json, 
-                    contentType: "application/json",                        
-                    success: function(response) {                        
-                        $("#tablaEventos").innerHTML("<thead><tr><th scope='col'>Torneo</th></tr></thead><tbody>");                        
-                        for (var i=0; i < response.length; i++){
-                            var evento = response[i];
-                        }
-                        "<tr><td>Mark</td></tr><tr><td>Jacob</td></tr><tr><td>Larry</td></tr></tbody>"
-                    },
-                    error: function(xhr, status, error) {                            
-                        console.log(error);
-                    }
-                });
-            }
-        </script>
-
-        <script>
-            $(document).ready(function() {
+            $(document).ready(function() {                
                 $("#aceptar").click(function() {                       
                     var nombreTorneo = $("#nombreTorneo").val();
                     var sistemaDeJuego = $("#sistemaDeJuego").val();
@@ -136,10 +140,19 @@
                     var location = $("#lugar").val();
                     var notas = $("#notas").val();
 
-                    var comienzoConverted = comienzo.replace(/\//g, "-");
-                    var finConverted = fin.replace(/\//g, "-");
+                    //var comienzoConverted = comienzo.replace(/\//g, "-");
+                    var date_horaComienzo = comienzo.split(" ");
+                    var soloDateComienzoYMD= date_horaComienzo[0].split("-");
+                    var comienzoConverted = soloDateComienzoYMD[2] + "-" + soloDateComienzoYMD[1] + "-" + soloDateComienzoYMD[0] + " " + date_horaComienzo[1];
 
-                    console.log (comienzoConverted + " - " + finConverted);
+                    //var finConverted = fin.replace(/\//g, "-");                    
+                    var date_horaFin = fin.split(" ");
+                    var soloDateFinYMD= date_horaComienzo[0].split("-");
+                    var finConverted = soloDateFinYMD[2] + "-" + soloDateFinYMD[1] + "-" + soloDateFinYMD[0] + " " + date_horaFin[1];
+
+                    if (checkFieldsValidation() == false){
+                        return;
+                    }
 
                     var objeto = {                        
                         "nombreTorneo": nombreTorneo,
@@ -161,8 +174,7 @@
                         type: "POST",
                         data: json, 
                         contentType: "application/json",                        
-                        success: function(response) {                        
-                            console.log("DONE: " + response);
+                        success: function(response) {                                                    
                             $('#myModal').modal('toggle');
                         },
                         error: function(xhr, status, error) {                            
@@ -172,6 +184,51 @@
                 }); //end of click on aceptar
 
             }); //end of document ready
+
+            $(".datetimepicker").each(function () {
+               $(this).datetimepicker({
+                    value: new Date(),
+                    format: 'd-m-Y H:i'
+                });            
+            });
+
+            function ocultarAlertaNombreTorneo(){
+                $("#validationNombreTorneo").removeClass("visible").addClass("oculto");  
+            }
+
+            function checkFieldsValidation() {
+                var isEverythingOK = true;
+                if ($("#nombreTorneo").val().trim()==""){                    
+                    $("#validationNombreTorneo").removeClass("oculto").addClass("visible");                    
+                    isEverythingOK = false;
+                }
+                return isEverythingOK;
+            }
+
+
+            function refrescaTabla(){
+                $.ajax({
+                    url: "http://localhost:8080/calendar",
+                    type: "GET",
+                    data: json, 
+                    contentType: "application/json",                        
+                    success: function(response) {                        
+                        $("#tablaEventos").innerHTML("<thead><tr><th scope='col'>Torneo</th></tr></thead><tbody>");                        
+                        for (var i=0; i < response.length; i++){
+                            var evento = response[i];
+                        }
+                        "<tr><td>Mark</td></tr><tr><td>Jacob</td></tr><tr><td>Larry</td></tr></tbody>"
+                    },
+                    error: function(xhr, status, error) {                            
+                        console.log(error);
+                    }
+                });
+            }
+          </script>
+       
+
+        <script>
+            
         </script>
 
     </body>
