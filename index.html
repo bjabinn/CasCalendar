@@ -79,6 +79,12 @@
                             var hora24h = moment(antiguoValor, "YYYY.MM.DD hh:mm A").format("DD.MM.YYYY HH:mm");
                             contenido.textContent=hora24h;
                         }                            
+                        
+                        var muñeco = document.querySelector("#calendario > div.toastui-calendar-floating-layer > div.toastui-calendar-event-detail-popup-slot > div > div.toastui-calendar-detail-container > div.toastui-calendar-popup-section.toastui-calendar-section-detail > div.toastui-calendar-detail-item.toastui-calendar-detail-item-indent");
+                        if (muñeco != null){
+                            muñeco.innerHTML = "";
+                        }
+
                         return data.title;
                     },
 
