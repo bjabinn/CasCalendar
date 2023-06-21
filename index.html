@@ -37,14 +37,16 @@
         <div id="releaseDate">20230619-1007</div>
         
         <script>
-            $(document).ready(function() {  
-                actualizaPeriodoCalendario();
-            });
+            var coloresFondo = {
+                cadiz: "#f3f702",
+                sevilla: "#fa2a4d",
+                huelva: "#2a73fa",
+                otros: "#A1B56C"
+            };
 
             var Calendar = window.tui.Calendar;            
 
             var cal = new Calendar('#calendario', {
-                calendars: [], 
                 usageStatistics: false, 
                 useDetailPopup: true,
                 month: {
@@ -78,13 +80,8 @@
                             var antiguoValor = contenido.textContent;
                             var hora24h = moment(antiguoValor, "YYYY.MM.DD hh:mm A").format("DD.MM.YYYY HH:mm");
                             contenido.textContent=hora24h;
-                        }                            
-                        
-                        var muñeco = document.querySelector("#calendario > div.toastui-calendar-floating-layer > div.toastui-calendar-event-detail-popup-slot > div > div.toastui-calendar-detail-container > div.toastui-calendar-popup-section.toastui-calendar-section-detail > div.toastui-calendar-detail-item.toastui-calendar-detail-item-indent");
-                        if (muñeco != null){
-                            muñeco.innerHTML = "";
                         }
-
+                        
                         return data.title;
                     },
 
@@ -104,6 +101,23 @@
                         var comienzoConverted = evento.comienzo.replace(/\//g, "-").replace(" ", "T") + ":00";
                         var finConverted = evento.fin.replace(/\//g, "-").replace(" ", "T") + ":00";
 
+                        var colorEvento = null;
+                        switch (evento.calendarId) {
+                            case coloresFondo.cadiz:
+                                colorEvento = coloresFondo.cadiz;
+                                break;
+                            case coloresFondo.sevilla:
+                                colorEvento = coloresFondo.sevilla;
+                                break;
+                            case coloresFondo.huelva:
+                                colorEvento = coloresFondo.huelva;
+                                break;
+                            default: 
+                                colorEvento = coloresFondo.otros;    
+                        }
+
+                        calendarId = evento.calendarId == null ? '99' : evento.calendarId;
+
                         eventToCalendar =  eventToCalendar + 
                                                '{' + 
                                                     '"title": "' + evento.nombreTorneo + '", ' + 
@@ -115,13 +129,15 @@
                                                     '"end": "' + finConverted + "\", " + 
                                                     '"location":' + "\"" + evento.location + "\"," + 
                                                     '"isReadOnly":true, ' + 
-                                                    '"isVisible":' + evento.visible + 
+                                                    '"isVisible":' + evento.visible + "," + 
+                                                    '"backgroundColor": "' + colorEvento + "\"," +
+                                                    '"calendarId":' + calendarId +  
                                               '}, ';
                     }
                     eventToCalendar = eventToCalendar.substring(0, eventToCalendar.length-2) + ']';
-                    //console.log(eventToCalendar);
+                    console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
-                    cal.createEvents(eventToCalendarJson);
+                    cal.createEvents(eventToCalendarJson);                    
                 });
             });
 
@@ -155,6 +171,39 @@
                 
                 $("#rangoFecha").text(diaMesAñoFinal);
             }
+
+            function actualizaColoresEventos(){
+                $(".toastui-calendar-weekday-event-dot").each(function() {
+                    var background = $(this).css("background-color");
+                    switch (background) {
+                        case coloresFondo.cadiz:
+                            $(this).parent().parent().css("background-color", coloresFondo.cadiz);
+                            break;
+                        case coloresFondo.sevilla:
+                            $(this).parent().parent().css("background-color", coloresFondo.sevilla);
+                            break;
+                        case coloresFondo.huelva:
+                            $(this).parent().parent().css("background-color", coloresFondo.huelva);
+                            break;
+                        default: 
+                            $(this).parent().parent().css("background-color", coloresFondo.otros);    
+                    }                    
+                });
+            }
+
+            function eliminaMuñecoAsistentesDetalle(){
+                $(".toastui-calendar-icon toastui-calendar-ic-user-b").each(function() {                    
+                    $(this).remove();
+                });
+            }
+
+            $(document).ready(function() {  
+                actualizaPeriodoCalendario();
+                // setTimeout(function() {
+                    //actualizaColoresEventos();
+                    //eliminaMuñecoAsistentesDetalle();
+                // }, 500);
+            });
 
         </script>
     </body>

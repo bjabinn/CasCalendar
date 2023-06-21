@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>        
         <link rel="stylesheet" href="./myThemeInsert.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <title>TORNEOS AJEDREZ</title>
     </head>
     <body>   
@@ -20,10 +21,23 @@
             </div>
         </div>     
         <div class="form-group" id="formulario">
-            <div class="form-group">
-                <label for="nombreTorneo">Nombre:</label>
-                <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo">
-                <div id="validationNombreTorneo" class="oculto validationField">El nombre del torneo no puede estar vacio</div>
+            <div class="form-row">
+
+                <div class="form-group col-md-9">
+                    <label for="nombreTorneo">Nombre:</label>
+                    <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo">
+                    <div id="validationNombreTorneo" class="oculto validationField">El nombre del torneo no puede estar vacio</div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="provincia">Provincia:</label>
+                    <select class="form-control" id="provincia">                        
+                        <option selected value="2">Sevilla</option>
+                        <option value="1">Cádiz</option>                        
+                        <option value="3">Huelva</option>
+                        <option value="99">Otra</option>
+                    </select>
+                </div>
             </div>
             
             
@@ -106,8 +120,9 @@
 
 
             <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>
-
-            <table id="eventos" class="table"></table>
+           
+            <h4 style="margin-top:50px;">Listado de Torneos en la base de datos:</h4>
+            <table id="tablaEventos" class="table"></table>
             
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -134,8 +149,25 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
-            $(document).ready(function() {                
-                $("#aceptar").click(function() {                       
+            $(document).ready(function() {
+                refrescaTabla();
+            }); //end of document ready
+
+// EVENTOS
+            $("#editarEvento").click(function() {
+                console.log("no implementado");
+            });
+
+            $("#eliminarEvento").click(function() {
+                console.log("no implementado");
+            });
+
+            $("#aceptar").click(function() {                       
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "http://localhost:8080";
+
+
                     var nombreTorneo = $("#nombreTorneo").val();
                     var sistemaDeJuego = $("#sistemaDeJuego").val();
                     var precio = $("#precio").val();
@@ -144,6 +176,7 @@
                     var fin = $("#fin").val();
                     var location = $("#lugar").val();
                     var notas = $("#notas").val();
+                    var provinciaId = $("#provincia").val();
 
                     //var comienzoConverted = comienzo.replace(/\//g, "-");
                     var date_horaComienzo = comienzo.split(" ");
@@ -168,12 +201,13 @@
                         "fin": finConverted,
                         "location": location,
                         "notas": notas,
+                        "calendarId": provinciaId,
                         "visible": true
                     };
 
                     var json = JSON.stringify(objeto);
 
-                    //http://localhost:8080
+
                     $.ajax({
                         url: "https://cas-calendar-api.herokuapp.com/calendar",
                         type: "POST",
@@ -188,15 +222,14 @@
                     });
                 }); //end of click on aceptar
 
-            }); //end of document ready
-
             $(".datetimepicker").each(function () {
-               $(this).datetimepicker({
+                $(this).datetimepicker({
                     value: new Date(),
                     format: 'd-m-Y H:i'
                 });            
             });
 
+// FUNCIONES 
             function ocultarAlertaNombreTorneo(){
                 $("#validationNombreTorneo").removeClass("visible").addClass("oculto");  
             }
@@ -210,30 +243,54 @@
                 return isEverythingOK;
             }
 
-
             function refrescaTabla(){
-                $.ajax({
-                    url: "http://localhost:8080/calendar",
-                    type: "GET",
-                    data: json, 
-                    contentType: "application/json",                        
-                    success: function(response) {                        
-                        $("#tablaEventos").innerHTML("<thead><tr><th scope='col'>Torneo</th></tr></thead><tbody>");                        
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "https://cas-calendar-api.herokuapp.com/calendar";
+
+                fetch(urlBackend, {
+                    headers: {"Content-Type": "application/json; charset=utf-8"}
+                }).then(function (response) {
+                    response.json().then(function (response) {
+
+                        response.sort(function (a,b) {
+                            return new Date(a.comienzo) - new Date(b.comienzo);
+                        });
+
+                        var tabla = "<table>" + 
+                                        '<thead class="thead-dark">' + 
+                                            "<tr>" + 
+                                                "<th scope='col'>Fecha/Hora Comienzo</th>" + 
+                                                "<th scope='col'>Torneo</th>" + 
+                                                "<th scope='col'></th>" + 
+                                                "<th scope='col'></th>" + 
+                                            "</tr>" + 
+                                        "</thead>" + 
+                                        "<tbody>";
+
                         for (var i=0; i < response.length; i++){
                             var evento = response[i];
+                            
+                            var hora24h = moment(evento.comienzo, "YYYY/MM/DD hh:mm A").format("DD-MM-YYYY HH:mm");                            
+
+                            var fila = "<tr>" + 
+                                            '<td style="display:none">' + evento.id + "</td>" + 
+                                            "<td>" + hora24h + "</td>" + 
+                                            "<td>" + evento.nombreTorneo + "</td>" + 
+                                            "<td>" + '<button id="editarEvento" type="button" class="btn btn-primary btn-sm">Editar</button>' + "</td>" + 
+                                            "<td>" + '<button id="eliminarEvento" type="button" class="btn btn-danger btn-sm">Eliminar</button>' + "</td>" + 
+                                        "</tr>";
+                            // console.log(evento.nombreTorneo)
+                            tabla += fila;
                         }
-                        "<tr><td>Mark</td></tr><tr><td>Jacob</td></tr><tr><td>Larry</td></tr></tbody>"
-                    },
-                    error: function(xhr, status, error) {                            
-                        console.log(error);
-                    }
+                        tabla += "</tbody></table>";
+                        $("#tablaEventos").html(tabla);
+                        
+                    });
                 });
             }
-          </script>
-       
 
-        <script>
-            
+
         </script>
 
     </body>
