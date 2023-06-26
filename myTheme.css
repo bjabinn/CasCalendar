@@ -62,6 +62,10 @@ body {
     padding: 8px;    
 }
 
+.toastui-calendar-template-popupDetailTitle{
+    word-break: break-word;
+}
+
 .calendar-icon {
     display: inline-block;
     width: 14px; 

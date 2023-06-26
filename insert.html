@@ -22,8 +22,11 @@
         </div>     
         <div class="form-group" id="formulario">
             <div class="form-row">
+                <span id="torneoId"></span>
 
-                <div class="form-group col-md-9">
+                <button id="nuevoTorneo" style="height: 38px; margin-top:23px;" type="button" class="col-md-1 btn btn-primary">Nuevo torneo</button>
+
+                <div class="form-group col-md-8">
                     <label for="nombreTorneo">Nombre:</label>
                     <input type="text" class="form-control" id="nombreTorneo" name="nombreTorneo" placeholder="Nombre del torneo">
                     <div id="validationNombreTorneo" class="oculto validationField">El nombre del torneo no puede estar vacio</div>
@@ -74,7 +77,7 @@
                 <input type="text" class="form-control" id="lugar" name="lugar" placeholder="Dirección de juego">                
             </div>
 
-            <div class="form-row" style="text-align: center; border: 1px solid #ced4da; border-radius: 5px; height: calc(1.5em + .75rem + 2px); padding: .375rem 1rem;">
+            <div class="form-row" id="categorias">
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub8" value="sub8">
                     <label class="form-check-label" for="chksub8">Sub8</label>
@@ -82,48 +85,52 @@
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub10" value="sub10">
-                    <label class="form-check-label" for="chksub8">Sub10</label>
+                    <label class="form-check-label" for="chksub10">Sub10</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub12" value="sub12">
-                    <label class="form-check-label" for="chksub8">Sub12</label>
+                    <label class="form-check-label" for="chksub12">Sub12</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub14" value="sub14">
-                    <label class="form-check-label" for="chksub8">Sub14</label>
+                    <label class="form-check-label" for="chksub14">Sub14</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chksub16" value="sub16">
-                    <label class="form-check-label" for="chksub6">Sub16</label>
+                    <label class="form-check-label" for="chksub16">Sub16</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chkSupra50" value="subSupra50">
-                    <label class="form-check-label" for="chksub8">Supra50</label>
+                    <label class="form-check-label" for="chkSupra50">Supra50</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chkSupra65" value="subSupra65">
-                    <label class="form-check-label" for="chksub8">Supra65</label>
+                    <label class="form-check-label" for="chkSupra65">Supra65</label>
                 </div>
 
                 <div class="col-md-1">
                     <input class="form-check-input" type="checkbox" id="chkFemenino" value="subFemenino">
-                    <label class="form-check-label" for="chksub8">Femenino</label>
+                    <label class="form-check-label" for="chkFemenino">Femenino</label>
                 </div>
             </div>
 
-            <div class="form-group"><label for="notas">Notas</label> <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas"></div>
+            <div class="form-group">
+                <label for="notas">Notas</label>
+                <input type="text" class="form-control" id="notas" name="notas" placeholder="Notas">
+            </div>
 
 
-            <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>
+            <button id="aceptar" type="button" class="btn btn-primary">Aceptar</button>            
            
             <h4 style="margin-top:50px;">Listado de Torneos en la base de datos:</h4>
             <table id="tablaEventos" class="table"></table>
             
+            <!-- Modal Guardado correctamente -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
@@ -141,6 +148,22 @@
                     </div>
                   </div>
                 </div>
+            </div>
+
+            <!-- Modal ELIMINAR Si/No -->
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-eliminar-si-no">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">¿Seguro desea eliminar el torneo seleccionado?</h4>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
+                      <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
         </div>     
@@ -149,87 +172,187 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
+
+            
             $(document).ready(function() {
                 refrescaTabla();
-            }); //end of document ready
 
 // EVENTOS
-            $("#editarEvento").click(function() {
-                console.log("no implementado");
-            });
+                $("#nuevoTorneo").click(function() {
+                    vaciarCampos();
+                });
 
-            $("#eliminarEvento").click(function() {
-                console.log("no implementado");
-            });
-
-            $("#aceptar").click(function() {                       
-                //http://localhost:8080
-                //https://cas-calendar-api.herokuapp.com/calendar
-                var urlBackend = "http://localhost:8080";
-
-
-                    var nombreTorneo = $("#nombreTorneo").val();
-                    var sistemaDeJuego = $("#sistemaDeJuego").val();
-                    var precio = $("#precio").val();
-                    var urlBases = $("#urlBases").val();
-                    var comienzo = $("#comienzo").val();
-                    var fin = $("#fin").val();
-                    var location = $("#lugar").val();
-                    var notas = $("#notas").val();
-                    var provinciaId = $("#provincia").val();
-
-                    //var comienzoConverted = comienzo.replace(/\//g, "-");
-                    var date_horaComienzo = comienzo.split(" ");
-                    var soloDateComienzoYMD= date_horaComienzo[0].split("-");
-                    var comienzoConverted = soloDateComienzoYMD[2] + "-" + soloDateComienzoYMD[1] + "-" + soloDateComienzoYMD[0] + " " + date_horaComienzo[1];
-
-                    //var finConverted = fin.replace(/\//g, "-");                    
-                    var date_horaFin = fin.split(" ");
-                    var soloDateFinYMD= date_horaComienzo[0].split("-");
-                    var finConverted = soloDateFinYMD[2] + "-" + soloDateFinYMD[1] + "-" + soloDateFinYMD[0] + " " + date_horaFin[1];
-
-                    if (checkFieldsValidation() == false){
-                        return;
+                $("#aceptar").click(function() {
+                    var torneoId = $("#torneoId").val();
+                    if (torneoId === ""){                        
+                        guardarTorneo();
+                    }else{                        
+                        actualizamosTorneo();
                     }
 
-                    var objeto = {                        
-                        "nombreTorneo": nombreTorneo,
-                        "sistemaDeJuego": sistemaDeJuego,
-                        "precio": precio,
-                        "basesURL": urlBases,                        
-                        "comienzo": comienzoConverted,
-                        "fin": finConverted,
-                        "location": location,
-                        "notas": notas,
-                        "calendarId": provinciaId,
-                        "visible": true
-                    };
-
-                    var json = JSON.stringify(objeto);
-
-
-                    $.ajax({
-                        url: "https://cas-calendar-api.herokuapp.com/calendar",
-                        type: "POST",
-                        data: json, 
-                        contentType: "application/json",                        
-                        success: function(response) {                                                    
-                            $('#myModal').modal('toggle');
-                        },
-                        error: function(xhr, status, error) {                            
-                            console.log(error);
-                        }
-                    });
                 }); //end of click on aceptar
 
-            $(".datetimepicker").each(function () {
-                $(this).datetimepicker({
-                    value: new Date(),
-                    format: 'd-m-Y H:i'
-                });            
-            });
+                $(".datetimepicker").each(function () {
+                    $(this).datetimepicker({
+                        value: new Date(),
+                        format: 'd-m-Y H:i'
+                    });            
+                });
+
+                $("#modal-btn-si").on("click", function(){                
+                    var torneoId = $("#torneoId").val();
+                    eliminarTorneoById(torneoId);
+                    $("#modal-eliminar-si-no").modal('hide');
+                });
+  
+                $("#modal-btn-no").on("click", function(){
+                    $("#torneoId").val("");
+                    $("#modal-eliminar-si-no").modal('hide');
+                });
+            }); //end of document ready
+
 
 // FUNCIONES 
+            function guardarTorneo(){
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "https://cas-calendar-api.herokuapp.com/calendar";
+
+                var nombreTorneo = $("#nombreTorneo").val();
+                var sistemaDeJuego = $("#sistemaDeJuego").val();
+                var precio = $("#precio").val();
+                var urlBases = $("#urlBases").val();
+                var comienzo = $("#comienzo").val();
+                var fin = $("#fin").val();
+                var location = $("#lugar").val();
+                var notas = $("#notas").val();
+                var provinciaId = $("#provincia").val();
+
+                //var comienzoConverted = comienzo.replace(/\//g, "-");
+                var date_horaComienzo = comienzo.split(" ");
+                var soloDateComienzoYMD= date_horaComienzo[0].split("-");
+                var comienzoConverted = soloDateComienzoYMD[2] + "-" + soloDateComienzoYMD[1] + "-" + soloDateComienzoYMD[0] + " " + date_horaComienzo[1];
+
+                //var finConverted = fin.replace(/\//g, "-");                    
+                var date_horaFin = fin.split(" ");
+                var soloDateFinYMD= date_horaComienzo[0].split("-");
+                var finConverted = soloDateFinYMD[2] + "-" + soloDateFinYMD[1] + "-" + soloDateFinYMD[0] + " " + date_horaFin[1];
+
+                if (checkFieldsValidation() == false){
+                    return;
+                }
+
+                var objeto = {                        
+                    "nombreTorneo": nombreTorneo,
+                    "sistemaDeJuego": sistemaDeJuego,
+                    "precio": precio,
+                    "basesURL": urlBases,                        
+                    "comienzo": comienzoConverted,
+                    "fin": finConverted,
+                    "location": location,
+                    "notas": notas,
+                    "calendarId": provinciaId,
+                    "visible": true
+                };
+
+                var json = JSON.stringify(objeto);
+
+
+                $.ajax({
+                    url: urlBackend,
+                    type: "POST",
+                    data: json, 
+                    contentType: "application/json",                        
+                    success: function(response) {                                                    
+                        $('#myModal').modal('toggle');
+                    },
+                    error: function(xhr, status, error) {                            
+                        console.log(error);
+                    }
+                });
+            }
+
+            function actualizamosTorneo(){
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "https://cas-calendar-api.herokuapp.com/calendar";
+
+                var torneoId = $("#torneoId").val();
+                var nombreTorneo = $("#nombreTorneo").val();
+                var sistemaDeJuego = $("#sistemaDeJuego").val();
+                var precio = $("#precio").val();
+                var urlBases = $("#urlBases").val();
+                var comienzo = $("#comienzo").val();
+                var fin = $("#fin").val();
+                var location = $("#lugar").val();
+                var notas = $("#notas").val();
+                var provinciaId = $("#provincia").val();
+
+                //var comienzoConverted = comienzo.replace(/\//g, "-");
+                var date_horaComienzo = comienzo.split(" ");
+                var soloDateComienzoYMD= date_horaComienzo[0].split("-");
+                var comienzoConverted = soloDateComienzoYMD[2] + "-" + soloDateComienzoYMD[1] + "-" + soloDateComienzoYMD[0] + " " + date_horaComienzo[1];
+
+                //var finConverted = fin.replace(/\//g, "-");                    
+                var date_horaFin = fin.split(" ");
+                var soloDateFinYMD= date_horaComienzo[0].split("-");
+                var finConverted = soloDateFinYMD[2] + "-" + soloDateFinYMD[1] + "-" + soloDateFinYMD[0] + " " + date_horaFin[1];
+
+                if (checkFieldsValidation() == false){
+                    return;
+                }
+
+                var objeto = {
+                    "id": torneoId,
+                    "nombreTorneo": nombreTorneo,
+                    "sistemaDeJuego": sistemaDeJuego,
+                    "precio": precio,
+                    "basesURL": urlBases,                        
+                    "comienzo": comienzoConverted,
+                    "fin": finConverted,
+                    "location": location,
+                    "notas": notas,
+                    "calendarId": provinciaId,
+                    "visible": true
+                };
+
+                var json = JSON.stringify(objeto);
+
+                $.ajax({
+                    url: urlBackend + "/" + torneoId,
+                    type: "PUT",
+                    data: json, 
+                    contentType: "application/json",                        
+                    success: function(response) {                                                                            
+                        $('#myModal').modal('toggle');
+                        refrescaTabla();
+                        vaciarCampos();
+                    },
+                    error: function(xhr, status, error) {                            
+                        console.log(error);
+                    }
+                });                
+
+            }
+
+            function vaciarCampos (){
+                $("#torneoId").val("");
+                $("#nombreTorneo").val("");
+                $('#provincia option:first').prop('selected', true);
+                $("#urlBases").val("");
+                $("#sistemaDeJuego").val("");
+                $("#precio").val("");
+
+                var fechaHoraActual = moment().format('DD-MM-YYYY HH:mm');
+                $("#comienzo").val(fechaHoraActual);
+                $("#fin").val(fechaHoraActual);
+                
+                $("#lugar").val("");
+                $(':checkbox').prop('checked', false);
+
+                $("#notas").val("");                
+            }
+            
             function ocultarAlertaNombreTorneo(){
                 $("#validationNombreTorneo").removeClass("visible").addClass("oculto");  
             }
@@ -271,17 +394,24 @@
                         for (var i=0; i < response.length; i++){
                             var evento = response[i];
                             
-                            var hora24h = moment(evento.comienzo, "YYYY/MM/DD hh:mm A").format("DD-MM-YYYY HH:mm");                            
+                            var fechaAyer = moment().subtract(1, 'day').startOf('day').format("YYYY/MM/DD HH:mm");                            
+                            
+                            var fechaEventoM = moment(evento.comienzo, "YYYY/MM/DD HH:mm")
 
-                            var fila = "<tr>" + 
-                                            '<td style="display:none">' + evento.id + "</td>" + 
-                                            "<td>" + hora24h + "</td>" + 
-                                            "<td>" + evento.nombreTorneo + "</td>" + 
-                                            "<td>" + '<button id="editarEvento" type="button" class="btn btn-primary btn-sm">Editar</button>' + "</td>" + 
-                                            "<td>" + '<button id="eliminarEvento" type="button" class="btn btn-danger btn-sm">Eliminar</button>' + "</td>" + 
-                                        "</tr>";
-                            // console.log(evento.nombreTorneo)
-                            tabla += fila;
+                            var isPosterior = fechaEventoM.isAfter(fechaAyer);
+                            if (isPosterior) {
+                                var hora24h = moment(evento.comienzo, "YYYY/MM/DD hh:mm A").format("DD-MM-YYYY HH:mm");                            
+                                    
+                                var fila = "<tr>" + 
+                                                '<td style="display:none">' + evento.id + "</td>" + 
+                                                "<td>" + hora24h + "</td>" + 
+                                                "<td>" + evento.nombreTorneo + "</td>" + 
+                                                "<td>" + '<button id="editarEvento'+evento.id + '" onclick="cargaDatosTorneoById(' + evento.id + ')" type="button" class="btn btn-primary btn-sm">Editar</button>' + "</td>" + 
+                                                "<td>" + '<button id="eliminarEvento'+evento.id + '" onclick="mostrarModalEliminarSiNo(' + evento.id + ')" type="button" class="btn btn-danger btn-sm">Eliminar</button>' + "</td>" + 
+                                            "</tr>";
+                                // console.log(evento.nombreTorneo)
+                                tabla += fila;
+                            }
                         }
                         tabla += "</tbody></table>";
                         $("#tablaEventos").html(tabla);
@@ -290,7 +420,71 @@
                 });
             }
 
+            function mostrarModalEliminarSiNo(torneoId) {
+                $("#modal-eliminar-si-no").modal('show');
+                $("#torneoId").val(torneoId);
+            }
 
+            function cargaDatosTorneoById(torneoId){                
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "https://cas-calendar-api.herokuapp.com/calendar";
+
+                $.ajax({
+                    url: urlBackend + "/" + torneoId,
+                    type: "GET",                    
+                    contentType: "application/json",                        
+                    success: function(response) {                                                    
+                        //console.log("CargaDatosTorneoById: " + torneoId + " " + JSON.stringify(response));
+
+                        $("#torneoId").val(response.id);
+                        $("#nombreTorneo").val(response.nombreTorneo);
+
+                        $('#provincia').val(response.calendarId);
+
+                        $("#urlBases").val(response.basesURL);
+                        $("#sistemaDeJuego").val(response.sistemaDeJuego);
+                        $("#precio").val(response.precio);
+                        
+                        var horaComienzo24h = moment(response.comienzo, "YYYY/MM/DD hh:mm A").format("DD-MM-YYYY HH:mm");
+                        $("#comienzo").val(horaComienzo24h);
+
+                        var horaFin24h = moment(response.fin, "YYYY/MM/DD hh:mm A").format("DD-MM-YYYY HH:mm");
+                        $("#fin").val(horaFin24h);
+                
+                        $("#lugar").val(response.location);
+
+                        //TODO
+                        //Faltan los checkboxes 
+
+                        $("#notas").val(response.notas);
+
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    },
+                    error: function(xhr, status, error) {                            
+                        console.log(error);
+                    }
+                });
+            }
+
+            function eliminarTorneoById(torneoId) {                
+                //http://localhost:8080
+                //https://cas-calendar-api.herokuapp.com/calendar
+                var urlBackend = "https://cas-calendar-api.herokuapp.com/calendar";
+                
+                $.ajax({
+                    url: urlBackend + "/" + torneoId,
+                    type: "DELETE",
+                    contentType: "application/json",                        
+                    success: function(response) {
+                        refrescaTabla();
+                        vaciarCampos();
+                    },
+                    error: function(xhr, status, error) {                            
+                        console.log(error);
+                    }
+                });                
+            }
         </script>
 
     </body>
