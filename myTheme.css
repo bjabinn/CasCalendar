@@ -30,6 +30,25 @@ body {
     padding: 0 10px 0 10px;
 }
 
+#calendarMenu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#menu-navi {
+    text-align: left;
+}
+
+#rango-fecha {
+    text-align: center;
+}
+
+#contenedorLeyendaCalendarios{
+    display:flex;
+    justify-content: right;
+}
+
 
 #calendario {
     margin: 10px;
@@ -64,6 +83,12 @@ body {
 
 .toastui-calendar-template-popupDetailTitle{
     word-break: break-word;
+}
+
+.indicacion-calendario{
+    display: inline-table;
+    padding: 2px;
+    margin: 0 10px;
 }
 
 .calendar-icon {

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div>
-            <div id="calendarMenu">
+            <div id="calendarMenu" style="display:flex; ">
                 <span id="menu-navi">
                     <button type="button" class="calendar-btn calendar-move-today" onclick="today();">Today</button>
                     <button type="button" class="calendar-btn calendar-move-day" onclick="previousMonth();">
@@ -31,11 +31,16 @@
                     </button>
                 </span>
                 <span class="calendar-render-range" id="rangoFecha"></span>
+                <div id="contenedorLeyendaCalendarios" style="display: inline-block">
+                    <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(250, 42, 77);">Sevilla</span>
+                    <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(243, 247, 2);">Cádiz</span>
+                    <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(42, 115, 250);">Huelva</span>
+                </div>
             </div>
         </div>        
         <div id="calendario"></div>
         <div id="releaseDate">20230619-1007</div>
-        
+
         <script>
             var coloresFondo = {
                 cadiz: "#f3f702",
@@ -45,6 +50,26 @@
             };
 
             var Calendar = window.tui.Calendar;            
+
+            var calendarsVar = [];
+            calendarsVar.push({
+                    id: 1,
+                    name: "cadiz",
+                    bgColor: coloresFondo.cadiz,
+                    borderColor: coloresFondo.cadiz
+            });
+            calendarsVar.push({
+                    id: 2,
+                    name: "sevilla",
+                    bgColor: coloresFondo.sevilla,
+                    borderColor: coloresFondo.sevilla
+            });
+            calendarsVar.push({
+                    id: 3,
+                    name: "huelva",
+                    bgColor: coloresFondo.huelva,
+                    borderColor: coloresFondo.huelva
+            });
 
             var cal = new Calendar('#calendario', {
                 usageStatistics: false, 
@@ -86,7 +111,8 @@
                     },
 
                 },
-                defaultView: 'month',                
+                defaultView: 'month',
+                calendars : calendarsVar
             });
 
             //http://localhost:8080
@@ -103,13 +129,13 @@
 
                         var colorEvento = null;
                         switch (evento.calendarId) {
-                            case coloresFondo.cadiz:
+                            case 1:
                                 colorEvento = coloresFondo.cadiz;
                                 break;
-                            case coloresFondo.sevilla:
+                            case 2:
                                 colorEvento = coloresFondo.sevilla;
                                 break;
-                            case coloresFondo.huelva:
+                            case 3:
                                 colorEvento = coloresFondo.huelva;
                                 break;
                             default: 
@@ -130,7 +156,7 @@
                                                     '"location":' + "\"" + evento.location + "\"," + 
                                                     '"isReadOnly":true, ' + 
                                                     '"isVisible":' + evento.visible + "," + 
-                                                    '"backgroundColor": "' + colorEvento + "\"," +
+                                                    '"backgroundColor": "' + colorEvento + "\"," +                                                    
                                                     '"calendarId":' + calendarId +  
                                               '}, ';
                     }
@@ -138,7 +164,7 @@
                     console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
                     cal.createEvents(eventToCalendarJson);                    
-                });
+                }); //end of fetch API filling calendar
             });
 
             function today() {
