@@ -1,5 +1,6 @@
 <html>
-    <head>        
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CBitter%3A400%2C700&display=swap" rel="stylesheet" nonce="">
         <link href="https://fonts.googleapis.com/css?family=Bitter%3Ai%2Cbi%2C700%2C400%2C500%7CMontserrat%3Ai%2Cbi%2C700%2C400&amp;display=swap" rel="stylesheet" nonce="">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -35,6 +36,7 @@
                     <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(250, 42, 77);">Sevilla</span>
                     <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(243, 247, 2);">Cádiz</span>
                     <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(42, 115, 250);">Huelva</span>
+                    <span class="toastui-calendar-weekday-event-dot indicacion-calendario" style="background-color: rgb(195, 193, 193);">Otros</span>
                 </div>
             </div>
         </div>        
@@ -46,7 +48,7 @@
                 cadiz: "#f3f702",
                 sevilla: "#fa2a4d",
                 huelva: "#2a73fa",
-                otros: "#A1B56C"
+                otros: "#C3C1C1"
             };
 
             var Calendar = window.tui.Calendar;            
@@ -70,6 +72,13 @@
                     bgColor: coloresFondo.huelva,
                     borderColor: coloresFondo.huelva
             });
+            calendarsVar.push({
+                    id: 99,
+                    name: "otros",
+                    bgColor: coloresFondo.otros,
+                    borderColor: coloresFondo.otros
+            });
+
 
             var cal = new Calendar('#calendario', {
                 usageStatistics: false, 
@@ -116,13 +125,16 @@
             });
 
             //http://localhost:8080
+            //https://cas-calendar-api.herokuapp.com/calendar
             fetch('https://cas-calendar-api.herokuapp.com/calendar', {
-                    headers: {"Content-Type": "application/json; charset=utf-8"}
+                    headers: {"Content-Type": "application/json; charset=utf-8;"}
             }).then(function (response) {
                 response.json().then(function (response) {
                     var eventToCalendar = '[';
                     for (var i=0; i < response.length; i++){
                         var evento = response[i];
+
+                        var textEvento = evento.nombreTorneo.replace(/\"/g,'\\"');
 
                         var comienzoConverted = evento.comienzo.replace(/\//g, "-").replace(" ", "T") + ":00";
                         var finConverted = evento.fin.replace(/\//g, "-").replace(" ", "T") + ":00";
@@ -142,11 +154,11 @@
                                 colorEvento = coloresFondo.otros;    
                         }
 
-                        calendarId = evento.calendarId == null ? '99' : evento.calendarId;
+                        calendarId = evento.calendarId == null ? '99' : evento.calendarId;                        
 
                         eventToCalendar =  eventToCalendar + 
                                                '{' + 
-                                                    '"title": "' + evento.nombreTorneo + '", ' + 
+                                                     '"title": "' + textEvento + '", ' + 
                                                     '"body": "<p><b>Sistema juego</b>:' + evento.sistemaDeJuego + '</p>' + 
                                                         '<p><b>Precio</b>:' + evento.precio + '</p>' + 
                                                         "<p><b>Bases</b>:<a target='_blank' href='" + evento.basesURL + "'>aqui</a></p>" + 
@@ -161,7 +173,7 @@
                                               '}, ';
                     }
                     eventToCalendar = eventToCalendar.substring(0, eventToCalendar.length-2) + ']';
-                    console.log(eventToCalendar);
+                    //console.log(eventToCalendar);
                     var eventToCalendarJson = JSON.parse(eventToCalendar);
                     cal.createEvents(eventToCalendarJson);                    
                 }); //end of fetch API filling calendar
@@ -225,10 +237,6 @@
 
             $(document).ready(function() {  
                 actualizaPeriodoCalendario();
-                // setTimeout(function() {
-                    //actualizaColoresEventos();
-                    //eliminaMuñecoAsistentesDetalle();
-                // }, 500);
             });
 
         </script>
