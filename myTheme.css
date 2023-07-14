@@ -91,6 +91,11 @@ body {
     margin: 0 10px;
 }
 
+.imagenCategoria {
+    width: 50px;
+    margin: 2px 2px;
+}
+
 .calendar-icon {
     display: inline-block;
     width: 14px; 

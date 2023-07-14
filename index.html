@@ -153,18 +153,38 @@
                                 colorEvento = coloresFondo.huelva;
                                 break;
                             default: 
-                                colorEvento = coloresFondo.otros;    
+                                colorEvento = coloresFondo.otros;
                         }
 
-                        calendarId = evento.calendarId == null ? '99' : evento.calendarId;                        
+                        calendarId = evento.calendarId == null ? '99' : evento.calendarId;
 
+                        //Añadimos las categorias que nos vienen del backend (si vienen)
+                        categorias = "";
+                        textoCategorias = "\",";
+                        if ('categorias' in evento && evento.categorias && evento.categorias.length > 0){
+                            evento.categorias.forEach(function(element) {                                
+                                categorias = categorias + "<img class='imagenCategoria' src='icons/"+ element + ".png'>";
+                            });
+
+
+                            // evento.categorias.forEach(function(element) {                                
+                            //     categorias = categorias + ", " + element;
+                            // });
+                            //console.log('Categorias: ' + categorias);
+                            //categorias = categorias.substring(1, categorias.length);
+
+                            textoCategorias = "<p style='align-items: center; display: inline-block;'><b style='align-items: center; display: table-footer-group'>Categorias</b>" + categorias + "</p>\",";                            
+                            //console.log(textoCategorias);
+                        }
+                                                                      
                         eventToCalendar =  eventToCalendar + 
                                                '{' + 
                                                      '"title": "' + textEvento + '", ' + 
                                                     '"body": "<p><b>Sistema juego</b>:' + evento.sistemaDeJuego + '</p>' + 
                                                         '<p><b>Precio</b>:' + evento.precio + '</p>' + 
                                                         "<p><b>Bases</b>:<a target='_blank' href='" + evento.basesURL + "'>aqui</a></p>" + 
-                                                        "<p><b>Notas</b>:" + evento.notas + "</p>\"," + 
+                                                        "<p><b>Notas</b>:" + evento.notas + "</p>" + 
+                                                        textoCategorias + 
                                                     '"start": "' + comienzoConverted + "\", " + 
                                                     '"end": "' + finConverted + "\", " + 
                                                     '"location":' + "\"" + evento.location + "\"," + 
@@ -213,14 +233,14 @@
             }
 
             function eliminaMuñecoAsistentesDetalle(){
-                console.log("eliminaMuñecoAsistentesDetalle");
+                //console.log("eliminaMuñecoAsistentesDetalle");
                 $(".toastui-calendar-ic-user-b").parent().each(function() {                                        
                     $(this).remove();
                 });
             }
 
             function eliminaCalendarioDetalle(){
-                console.log("elminaCalendarioDetalle");
+                //console.log("elminaCalendarioDetalle");
                 $(".toastui-calendar-calendar-dot").parent().each(function() {                                        
                     $(this).remove();
                 });
