@@ -207,12 +207,23 @@
 
                 }); //end of click on aceptar
 
-                $(".datetimepicker").each(function () {
-                    $(this).datetimepicker({
-                        value: new Date(),
-                        format: 'd-m-Y H:i'
-                    });            
+                $("#comienzo").change(function() {
+                    var valorComienzo = $('#comienzo').val();
+                    var newFinValue = moment(valorComienzo, 'DD-MM-YYYYY HH:mm').add(1, 'hour').format('DD-MM-YYYY HH:mm');
+                    $("#fin").val(newFinValue);
                 });
+
+                $("#comienzo").datetimepicker({
+                    value: new Date(),
+                    format: 'd-m-Y H:i',
+                });
+
+                $("#fin").datetimepicker({
+                    value: new Date(),
+                    format: 'd-m-Y H:i'
+                });
+
+
 
                 $("#modal-btn-si").on("click", function(){                
                     var torneoId = $("#torneoId").val();
