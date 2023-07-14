@@ -56,25 +56,25 @@
             var calendarsVar = [];
             calendarsVar.push({
                     id: 1,
-                    name: "cadiz",
+                    name: "Cadiz",
                     bgColor: coloresFondo.cadiz,
                     borderColor: coloresFondo.cadiz
             });
             calendarsVar.push({
                     id: 2,
-                    name: "sevilla",
+                    name: "Sevilla",
                     bgColor: coloresFondo.sevilla,
                     borderColor: coloresFondo.sevilla
             });
             calendarsVar.push({
                     id: 3,
-                    name: "huelva",
+                    name: "Huelva",
                     bgColor: coloresFondo.huelva,
                     borderColor: coloresFondo.huelva
             });
             calendarsVar.push({
                     id: 99,
-                    name: "otros",
+                    name: "Otros",
                     bgColor: coloresFondo.otros,
                     borderColor: coloresFondo.otros
             });
@@ -118,7 +118,9 @@
                         
                         return data.title;
                     },
-
+                    popupDetailAttendees({ attendees = [] }) {                        
+                        return '';
+                    }
                 },
                 defaultView: 'month',
                 calendars : calendarsVar
@@ -210,33 +212,45 @@
                 $("#rangoFecha").text(diaMesAñoFinal);
             }
 
-            function actualizaColoresEventos(){
-                $(".toastui-calendar-weekday-event-dot").each(function() {
-                    var background = $(this).css("background-color");
-                    switch (background) {
-                        case coloresFondo.cadiz:
-                            $(this).parent().parent().css("background-color", coloresFondo.cadiz);
-                            break;
-                        case coloresFondo.sevilla:
-                            $(this).parent().parent().css("background-color", coloresFondo.sevilla);
-                            break;
-                        case coloresFondo.huelva:
-                            $(this).parent().parent().css("background-color", coloresFondo.huelva);
-                            break;
-                        default: 
-                            $(this).parent().parent().css("background-color", coloresFondo.otros);    
-                    }                    
-                });
-            }
-
             function eliminaMuñecoAsistentesDetalle(){
-                $(".toastui-calendar-icon toastui-calendar-ic-user-b").each(function() {                    
+                console.log("eliminaMuñecoAsistentesDetalle");
+                $(".toastui-calendar-ic-user-b").parent().each(function() {                                        
                     $(this).remove();
                 });
             }
 
+            function eliminaCalendarioDetalle(){
+                console.log("elminaCalendarioDetalle");
+                $(".toastui-calendar-calendar-dot").parent().each(function() {                                        
+                    $(this).remove();
+                });
+            }
+
+            function setObserverPopup(){
+                var div = $('.toastui-calendar-popup-overlay')[0];
+
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {                        
+                        if (mutation.attributeName === 'style') {
+                            var display = $(mutation.target).css('display');                                                
+                            if (display === 'block') {                                                            
+                                eliminaMuñecoAsistentesDetalle();
+                                eliminaCalendarioDetalle();
+                            }
+                        }
+                    });
+                });
+
+                var options = {
+                    attributes: true
+                };
+
+                observer.observe(div, options);
+            }
+
             $(document).ready(function() {  
                 actualizaPeriodoCalendario();
+                setObserverPopup();
             });
 
         </script>

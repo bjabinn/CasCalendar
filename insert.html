@@ -117,6 +117,21 @@
                     <input class="form-check-input" type="checkbox" id="chkFemenino" value="subFemenino">
                     <label class="form-check-label" for="chkFemenino">Femenino</label>
                 </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chkFada" value="fada">
+                    <label class="form-check-label" for="chkFemenino">FADA</label>
+                </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chkFeda" value="feda">
+                    <label class="form-check-label" for="chkFemenino">FEDA</label>
+                </div>
+
+                <div class="col-md-1">
+                    <input class="form-check-input" type="checkbox" id="chkFide" value="fide">
+                    <label class="form-check-label" for="chkFemenino">FIDE</label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -279,6 +294,7 @@
 
                 var torneoId = $("#torneoId").val();
                 var nombreTorneo = $("#nombreTorneo").val();
+                var provinciaId = $("#provincia").val();
                 var sistemaDeJuego = $("#sistemaDeJuego").val();
                 var precio = $("#precio").val();
                 var urlBases = $("#urlBases").val();
@@ -286,7 +302,7 @@
                 var fin = $("#fin").val();
                 var location = $("#lugar").val();
                 var notas = $("#notas").val();
-                var provinciaId = $("#provincia").val();
+                
 
                 //var comienzoConverted = comienzo.replace(/\//g, "-");
                 var date_horaComienzo = comienzo.split(" ");
